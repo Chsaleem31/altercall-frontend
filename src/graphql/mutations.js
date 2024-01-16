@@ -1,48 +1,46 @@
-import gql from "graphql-tag";
+import { gql } from "@apollo/client";
 
-export const MOVE_CARD = gql`
-  mutation MoveCard($id: String!, $status: String!) {
-    updateCard(cardId: $id, status: $status) {
-      card {
-        id
-        title
-        description
-        status
+export const SIGN_UP_MUTATION = gql`
+  mutation SignUp(
+    $username: String!
+    $name: String!
+    $password: String!
+    $email: String!
+    $height: String!
+    $weight: String!
+  ) {
+    signup(
+      username: $username
+      name: $name
+      password: $password
+      email: $email
+      height: $height
+      weight: $weight
+    ) {
+      user {
+        username
+        email
       }
     }
   }
 `;
 
-export const ADD_CARD = gql`
-  mutation AddCard($title: String!, $description: String, $status: String!) {
-    createCard(title: $title, description: $description, status: $status) {
-      card {
-        id
-        title
-        description
-        status
-      }
-    }
-  }
-`;
-
-export const UPDATE_CARD = gql`
-  mutation UpdateCard($id: String!, $title: String!, $description: String) {
-    updateCard(cardId: $id, title: $title, description: $description) {
-      card {
-        id
-        title
-        description
-        status
-      }
-    }
-  }
-`;
-
-export const DELETE_CARD = gql`
-  mutation DeleteCard($id: String!) {
-    deleteCard(cardId: $id) {
+export const USER_CONFIRMATION_MUTATION = gql`
+  mutation UserConfirmation($username: String!, $otp: String!) {
+    confirmUser(username: $username, otp: $otp) {
       success
+    }
+  }
+`;
+
+export const SIGNIN_MUTATION = gql`
+  mutation Signin($username: String!, $password: String!) {
+    signin(username: $username, password: $password) {
+      accessToken
+      refreshToken
+      userId
+      userName
+      userEmail
     }
   }
 `;
