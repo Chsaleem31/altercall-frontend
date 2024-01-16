@@ -1,7 +1,7 @@
 import { Button, Modal, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { USER_CONFIRMATION_MUTATION } from "../graphql/mutations"; // Import your mutation from the correct location
+import { USER_CONFIRMATION_MUTATION } from "../graphql/mutations";
 import { useNavigate } from "react-router-dom";
 
 export const OtpModal = ({ onClose, shouldShow, username }) => {
@@ -9,7 +9,7 @@ export const OtpModal = ({ onClose, shouldShow, username }) => {
   const [otp, setOtp] = useState("");
   const [confirmUserMutation] = useMutation(USER_CONFIRMATION_MUTATION);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     try {
       const { data } = await confirmUserMutation({
         variables: {
@@ -18,16 +18,14 @@ export const OtpModal = ({ onClose, shouldShow, username }) => {
         },
       });
 
-      // Handle the response as needed
       console.log("User Confirmation response:", data);
       navigate("/signin");
     } catch (error) {
       alert(error);
     } finally {
-      // Close the modal, whether successful or not
       onClose();
     }
-  };
+  }, [confirmUserMutation, navigate, onClose, otp, username]);
 
   return (
     <Modal show={shouldShow} onClose={onClose} size="2xl">

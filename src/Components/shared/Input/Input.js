@@ -1,16 +1,10 @@
 "use client";
 
 import classNames from "classnames";
-import { Label, TextInput, TextInputProps } from "flowbite-react";
+import { Label, TextInput } from "flowbite-react";
 import { ErrorMessage, useField } from "formik";
 
-const Input = ({
-  name,
-  label,
-  type = "text",
-  required,
-  ...props
-}) => {
+const Input = ({ name, label, type = "text", required, ...props }) => {
   const [field, meta, { setValue }] = useField(name);
   const ariaAttributes = {
     "aria-invalid": !!(meta.error && meta.touched),

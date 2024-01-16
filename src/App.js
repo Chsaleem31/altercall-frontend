@@ -4,20 +4,19 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import client from "./apollo";
 import HomePage from "./pages/HomePage";
-import { SignupForm } from "./Components/SignupForm";
-import { SigninForm } from "./Components/SigninForm";
-
-// Import your components for signup, signin, and homepage
+import { SignupForm } from "./components/SignupForm";
+import { SigninForm } from "./components/SigninForm";
 
 const App = () => {
   return (
     <ApolloProvider client={client}>
       <Router>
-      <Routes>
-      <Route path="/signup" element={<SignupForm />} />
-      <Route path="/signin" element={<SigninForm />} /> 
-      <Route path="/" element={<HomePage />} />
-    </Routes>
+        <Routes>
+          <Route path="/signup" element={<SignupForm />} />
+          <Route path="/signin" element={<SigninForm />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="*" element={<SigninForm />} />
+        </Routes>
       </Router>
     </ApolloProvider>
   );

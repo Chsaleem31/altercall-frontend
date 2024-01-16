@@ -1,26 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Button, Card } from "flowbite-react";
 import { Form, Formik } from "formik";
 import { useMutation } from "@apollo/client";
 import { SIGN_UP_MUTATION } from "../graphql/mutations";
-import Input from "./Input/Input";
+import Input from "./shared/Input/Input";
 import { OtpModal } from "./OtpModal";
 import { Link } from "react-router-dom";
 
 export const SignupForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showModal, setshowModal] = useState(false);
   const [userData, setuserData] = useState(null);
-
   const [signUpMutation] = useMutation(SIGN_UP_MUTATION);
-  // console.log("🚀 ~ SignupForm ~ signUpMutation:", signUpMutation);
 
-  const handleSubmit = async (values) => {
-    console.log("🚀 ~ handleSubmit ~ values:", values);
+  const handleSubmit = useCallback(async (values, { setSubmitting }) => {
     try {
-      setIsSubmitting(true);
       const {
         data: {
           signup: { user },
@@ -41,9 +36,10 @@ export const SignupForm = () => {
     } catch (error) {
       alert(error);
     } finally {
-      setIsSubmitting(false);
+      setSubmitting(false);
     }
-  };
+  }, [signUpMutation]);
+
   return (
     <div className="flex items-center justify-center h-screen">
       <Card className="w-1/3">

@@ -1,41 +1,30 @@
-// Import necessary dependencies and the mutation
 import { Button, Card } from "flowbite-react";
 import { Form, Formik } from "formik";
-import Input from "./Input/Input";
+import Input from "./shared/Input/Input";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { SIGNIN_MUTATION } from "../graphql/mutations"; // Import your mutation from the correct location
+import { useCallback } from "react";
 
 export const SigninForm = () => {
-  // Initialize useNavigate
   const navigate = useNavigate();
-
-  // Initialize the mutation hook
   const [signinMutation] = useMutation(SIGNIN_MUTATION);
 
-  // Define the submit function
-  const handleSubmit = async (values) => {
+  const handleSubmit = useCallback(async (values) => {
     try {
-      // Execute the mutation
       const { data } = await signinMutation({
         variables: {
-          username: values.email, // Assuming you use email as username in this case
+          username: values.email,
           password: values.password,
         },
       });
 
-      // Handle the response as needed
-      console.log("Signin response:", data);
-
-      // Redirect to a different page upon successful signin
-      // For example, assuming you have a "/dashboard" route
       localStorage.setItem("userData", data?.signin);
       navigate("/");
     } catch (error) {
-      // Handle errors
       alert(error);
     }
-  };
+  }, [navigate, signinMutation]);
 
   return (
     <div className="flex items-center justify-center h-screen">
