@@ -12,10 +12,7 @@ export const OtpModal = ({ onClose, shouldShow, username }) => {
   const handleSubmit = useCallback(async () => {
     try {
       const { data } = await confirmUserMutation({
-        variables: {
-          username: username,
-          otp: otp,
-        },
+        variables: { username, otp },
       });
 
       console.log("User Confirmation response:", data);
