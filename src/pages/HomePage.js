@@ -1,10 +1,11 @@
-import { Button, Card } from "flowbite-react";
+import { Button, Card, Spinner } from "flowbite-react";
 import { Form, Formik } from "formik";
 import Input from "../Components/Input/Input";
 import { useState } from "react";
 
 const HomePage = () => {
   const [aiResponse, setAiResponse] = useState("");
+  const [loader, setloader] = useState(false);
 
   const handleSubmit = async (values) => {
     try {
@@ -26,6 +27,7 @@ const HomePage = () => {
         const data = await response.json();
         // Assuming the Lambda function returns a property called 'aiResponse'
         setAiResponse(data.workoutSuggestion);
+        setloader(false);
       } else {
         // Handle non-ok response
         console.error("Error fetching AI response:", response.status);
@@ -33,37 +35,44 @@ const HomePage = () => {
     } catch (error) {
       // Handle fetch error
       console.error("Error fetching AI response:", error);
+      setloader(false);
     }
   };
 
   return (
     <div className="flex p-5 gap-5 items-center justify-center h-screen">
-      <Card className="w-1/2">
-        <Formik
-          initialValues={{
-            age: "", // Assuming you have an 'age' input in your form
-            height: "",
-          }}
-          onSubmit={handleSubmit}
-        >
-          {() => (
-            <Form>
-              <Input name="age" label="Age" placeholder="Your age" required />
-              <Input
-                name="height"
-                label="Height"
-                placeholder="Height (ft)"
-                required
-              />
+      <Card className={aiResponse ? "w-1/3" : "w-1/2"}>
+        {loader ? (
+          <Spinner color="green" className="fill-blue-500" />
+        ) : (
+          <Formik
+            initialValues={{
+              age: "", // Assuming you have an 'age' input in your form
+              height: "",
+            }}
+            onSubmit={handleSubmit}
+          >
+            {() => (
+              <Form>
+                <Input name="age" label="Age" placeholder="Your age" required />
+                <Input
+                  name="height"
+                  label="Height"
+                  placeholder="Height (ft)"
+                  required
+                />
 
-              <Button type="submit" className="mt-2" color="blue">
-                Ask AI
-              </Button>
-            </Form>
-          )}
-        </Formik>
+                <Button type="submit" className="mt-2" color="blue">
+                  Ask AI
+                </Button>
+              </Form>
+            )}
+          </Formik>
+        )}
       </Card>
-      <div className="w-1/2">{aiResponse && `AI Response: ${aiResponse}`}</div>
+      <div className={aiResponse ? "" : "w-1/2"}>
+        {aiResponse && `AI Response: ${aiResponse}`}
+      </div>
     </div>
   );
 };
