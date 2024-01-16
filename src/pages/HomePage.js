@@ -25,7 +25,7 @@ const HomePage = () => {
       if (response.ok) {
         const data = await response.json();
         // Assuming the Lambda function returns a property called 'aiResponse'
-        setAiResponse(data.aiResponse);
+        setAiResponse(data.workoutSuggestion);
       } else {
         // Handle non-ok response
         console.error("Error fetching AI response:", response.status);
@@ -37,8 +37,8 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <Card className="w-1/3">
+    <div className="flex p-5 gap-5 items-center justify-center h-screen">
+      <Card className="w-1/2">
         <Formik
           initialValues={{
             age: "", // Assuming you have an 'age' input in your form
@@ -63,7 +63,7 @@ const HomePage = () => {
           )}
         </Formik>
       </Card>
-      <div>{aiResponse && `AI Response: ${aiResponse}`}</div>
+      <div className="w-1/2">{aiResponse && `AI Response: ${aiResponse}`}</div>
     </div>
   );
 };
