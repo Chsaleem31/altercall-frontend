@@ -7,7 +7,7 @@ const HomePage = () => {
   const [aiResponse, setAiResponse] = useState("");
   const [loader, setloader] = useState(false);
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     try {
       setloader(true);
       const response = await fetch(
@@ -28,6 +28,7 @@ const HomePage = () => {
         const data = await response.json();
         // Assuming the Lambda function returns a property called 'aiResponse'
         setAiResponse(data.workoutSuggestion);
+        resetForm();
         setloader(false);
       } else {
         // Handle non-ok response
@@ -42,7 +43,7 @@ const HomePage = () => {
 
   return (
     <div className="flex p-5 gap-5 items-center justify-center h-screen">
-      <Card className={aiResponse ? "w-1/3" : "w-1/2"}>
+      <Card className="w-1/2">
         {loader ? (
           <Spinner color="green" className="fill-blue-500" />
         ) : (
@@ -71,9 +72,7 @@ const HomePage = () => {
           </Formik>
         )}
       </Card>
-      <div className={aiResponse ? "" : "w-1/2"}>
-        {aiResponse && `AI Response: ${aiResponse}`}
-      </div>
+      {aiResponse && <div className="w-1/2">AI Response: ${aiResponse}</div>}
     </div>
   );
 };
