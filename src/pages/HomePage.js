@@ -9,6 +9,7 @@ const HomePage = () => {
 
   const handleSubmit = async (values) => {
     try {
+      setloader(true);
       const response = await fetch(
         "https://4elmsusmue.execute-api.eu-north-1.amazonaws.com/default/askAI",
         {
