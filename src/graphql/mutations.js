@@ -6,16 +6,12 @@ export const SIGN_UP_MUTATION = gql`
     $name: String!
     $password: String!
     $email: String!
-    $height: String!
-    $weight: String!
   ) {
     signup(
       username: $username
       name: $name
       password: $password
       email: $email
-      height: $height
-      weight: $weight
     ) {
       user {
         username
