@@ -1,6 +1,6 @@
 import { Button, Card, Spinner } from "flowbite-react";
 import { Form, Formik } from "formik";
-import Input from "../components/shared/Input/Input";
+import Input from "../component-dir/shared/Input/Input";
 import { useCallback, useState } from "react";
 
 const API_GATEWAY_BASE_URL = "https://4elmsusmue.execute-api.eu-north-1.amazonaws.com/default";

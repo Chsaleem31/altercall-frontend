@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import client from "./apollo";
 import HomePage from "./pages/HomePage";
-import { SignupForm } from "./components/SignupForm";
-import { SigninForm } from "./components/SigninForm";
+import { SignupForm } from "./component-dir/SignupForm";
+import { SigninForm } from "./component-dir/SigninForm";
 
 const App = () => {
   return (
